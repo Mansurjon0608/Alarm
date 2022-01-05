@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Yanvargi</string>
-    <string name="title">Title</string>
+
     <string name="vibrate">Vibrate</string>
     <string name="time_and_date">Time and Date</string>
     <string name="time">Time</string>
     <string name="title">Title</string>
     <string name="save">Save</string>
+    <string name="bekor_qilish">Bekor qilish</string>
+    <string name="dots">:</string>
 </resources>

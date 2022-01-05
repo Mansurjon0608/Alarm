@@ -8,10 +8,9 @@ import com.os3ketchup.yanvargi.databinding.ItemRvBinding
 import models.Alarm
 
 class RvAdapter(
-    val context: Context?,
-    var list: ArrayList<Alarm>,
-    var rvClick: RvClick,
-    var like: Int = 0
+    var list: List<Alarm>,
+    val rvClick: RvClick,
+
 ) : RecyclerView.Adapter<RvAdapter.Vh>() {
 
     inner class Vh(var itemRv: ItemRvBinding) : RecyclerView.ViewHolder(itemRv.root) {
@@ -19,14 +18,31 @@ class RvAdapter(
 
         fun onBind(alarm: Alarm) {
             itemRv.txtTitle.text = alarm.title
+            itemRv.txtTime.text = alarm.hours.toString()
 
+            if (alarm.isRun) {
+                itemRv.rvSwitch.isChecked = true
+            }
+
+
+            itemRv.root.setOnLongClickListener{
+                println("position: $position")
+                rvClick.longClick(alarm, position)
+                true
+            }
+            itemRv.rvSwitch.setOnCheckedChangeListener { button, b ->
+                alarm.isRun = b
+                rvClick.switchOnOff(alarm, position)
+            }
         }
     }
 
 
-    interface RvClick {
-        fun onClick(alarm: Alarm)
+    interface RvClick{
+        fun longClick(alarmObekt: Alarm, position: Int)
+        fun switchOnOff(alarmObekt: Alarm, position: Int)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Vh {
         return Vh(ItemRvBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
